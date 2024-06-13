@@ -50,14 +50,6 @@ if startnow in no:
             config.set("Settings", "delete", delete)
             with open('config.ini', 'w') as config_file:
                 config.write(config_file)
-if 10 < interval / 60 % 100 < 20:
-    ending = ""
-elif interval / 60 % 10 == 1:
-    ending = "у"
-elif interval /60 % 10 in [2, 3, 4]:
-    ending = "ы"
-else:
-    ending = ""
     if mincost in yes:   
         cost_url = f"https://tele2.ru/api/exchange/lots/stats/volumes?trafficType={trafficType}"
         try:
@@ -104,9 +96,17 @@ else:
                         return cost
                 return None
             cost = int(get_cost(volume))
-    
-while True:    
-    
+if 10 < interval / 60 % 100 < 20:
+    ending = ""
+elif interval / 60 % 10 == 1:
+    ending = "у"
+elif interval /60 % 10 in [2, 3, 4]:
+    ending = "ы"
+else:
+    ending = ""
+
+while True:
+
     trafficTypeFile = "gb" if trafficType == "data" else "min" if trafficType == "voice" else "sms"
     if delete in yes:
         open(f"sales_{volume}{trafficTypeFile}_{cost}p.txt", "w").close()
@@ -150,10 +150,6 @@ def check(id):
         print(Fore.YELLOW + f'Нет данных для обработки. Ошибка: {e}')
     return False, None
 trafficTypeVisual = " ГБ" if trafficType == "data" else " минут(ы)" if trafficType == "voice" else " SMS"
-if a == 0:
-    k = round((s_p/(a+1+r))*100, 1)
-else:
-    k = round((s_p/(a+r))*100, 1)
 
 while True:
     if a == 0:
